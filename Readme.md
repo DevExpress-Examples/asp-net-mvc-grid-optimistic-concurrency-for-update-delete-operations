@@ -7,14 +7,14 @@
 
 This example illustrates how to implement [optimistic concurrency](https://en.wikipedia.org/wiki/Optimistic_concurrency_control) when bind the [GridView]() extension to a data source using the Entity Framework and the "Code First" development approach. See the following topic for more information: [Bind Grid View to Data via Entity Framework (Code First)](https://docs.devexpress.com/AspNetMvc/14580/components/grid-view/binding-to-data/binding-to-data-via-entity-framework-code-first). 
 
-Note that [Entity Framework](https://learn.microsoft.com/en-us/ef/ef6/) includes the corresponding functionality out-of-the-box if you define the following field in your data model:
+Note that [Entity Framework](https://learn.microsoft.com/en-us/ef/ef6/) includes the corresponding functionality out-of-the-box if you define the [Timestamp](https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/data-annotations#timestamp) field in your data model:
 
 ```cs
 [Timestamp]
 public Byte[] RowVersion { get; set; }
 ```
 
-Refet to the following topic for more information: [TimeStamp](https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/data-annotations#timestamp). Once you define the `Timestamp` field, entity framework automatically performs concurrency checks when saving data to the database. In case of concurrency conflict, the [DbUpdateConcurrencyException](https://learn.microsoft.com/en-us/dotnet/api/system.data.entity.infrastructure.dbupdateconcurrencyexception) will be thrown.
+Once you define the `Timestamp` field, entity framework automatically performs concurrency checks when saving data to the data base. In case of concurrency conflict, the [DbUpdateConcurrencyException](https://learn.microsoft.com/en-us/dotnet/api/system.data.entity.infrastructure.dbupdateconcurrencyexception) will be thrown.
 
 In stateless environments like ASP.NET MVC, you need some additional logic over the default Entity Framework's logic to keep the current `RowVersion` value for the specific object between postbacks. To pass RowVersion-related data to the client, you can use the approach illustrated in the following topic: [Passing Values Between Server and Client Sides](https://docs.devexpress.com/AspNetMvc/402316/common-features/client-side-functionality/passing-values-between-server-and-client-sides).
 
@@ -35,7 +35,7 @@ settings.CustomJSProperties = (s, e) => {
 };
 ```
 
-After that, pass this data back to the corresponding Update or Delete controller's action method on the server side. Reffer to the following topic for more information: [Passing Values to a Controller Action through Callbacks](https://docs.devexpress.com/AspNetMvc/9941/common-features/callback-based-functionality/passing-values-to-a-controller-action-through-callbacks)
+After that, pass this data back to the corresponding Update or Delete controller's action method on the server side. Reffer to the following topic for more information: [Passing Values to a Controller Action through Callbacks](https://docs.devexpress.com/AspNetMvc/9941/common-features/callback-based-functionality/passing-values-to-a-controller-action-through-callbacks).
 
 ```js
 function GridView_BeginCallback(s, e) {
@@ -77,3 +77,11 @@ private byte[] CalculateOldRowVersion(int id) {
 * [Customer.cs](./CS/Models/Customer.cs) (VB: [Customer.vb](./VB/Models/Customer.vb))
 * [GridViewPartial.cshtml](./CS/Views/Home/GridViewPartial.cshtml)
 * [Index.cshtml](./CS/Views/Home/Index.cshtml)
+
+## Documentation
+
+* [Bind Grid View to Data via Entity Framework (Code First)](https://docs.devexpress.com/AspNetMvc/14580/components/grid-view/binding-to-data/binding-to-data-via-entity-framework-code-first)
+* [Passing Values Between Server and Client Sides](https://docs.devexpress.com/AspNetMvc/402316/common-features/client-side-functionality/passing-values-between-server-and-client-sides)
+* [Passing Values to a Controller Action through Callbacks](https://docs.devexpress.com/AspNetMvc/9941/common-features/callback-based-functionality/passing-values-to-a-controller-action-through-callbacks)
+* [Timestamp](https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/data-annotations#timestamp)
+
