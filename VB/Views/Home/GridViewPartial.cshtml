@@ -1,0 +1,51 @@
+@model System.Collections.IEnumerable
+
+@Html.DevExpress().GridView(settings => {
+    settings.Name = "GridView";
+    settings.KeyFieldName = "Id";
+    settings.CallbackRouteValues = new { Controller = "Home", Action = "GridViewPartial" };
+
+    settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Home", Action = "GridViewPartialAddNew" };
+    settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Home", Action = "GridViewPartialUpdate" };
+    settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Home", Action = "GridViewPartialDelete" };
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowEditButton = true;
+    settings.CommandColumn.ShowNewButton = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+
+    settings.Columns.Add(column => {
+        column.FieldName = "Id";
+        column.ReadOnly = true;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+    });
+
+    settings.Columns.Add("FirstName");
+    settings.Columns.Add("LastName");
+    settings.Columns.Add("Age");
+    settings.Columns.Add("Email");
+
+    settings.CustomJSProperties = (s, e) => {
+        MVCxGridView gridView = (MVCxGridView)s;
+        
+        var dictionary = new System.Collections.Generic.Dictionary<object, string>();
+
+        for (int i = 0; i < gridView.SettingsPager.PageSize; i++) {
+            var visibleIndex = i + gridView.VisibleStartIndex;
+            if (visibleIndex >= gridView.VisibleRowCount)
+                break;
+
+            object[] rowValues = (object[])gridView.GetRowValues(visibleIndex, gridView.KeyFieldName, "RowVersion");
+
+            dictionary[rowValues[0].ToString()] = Convert.ToBase64String((byte[])rowValues[1]);
+        }
+
+        e.Properties["cpRowVersions"] = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(dictionary);
+
+        if (ViewData["EditError"] != null)
+            e.Properties["cpEditError"] = ViewData["EditError"];
+    };
+
+    settings.ClientSideEvents.BeginCallback = "GridView_BeginCallback";
+    settings.ClientSideEvents.EndCallback = "GridView_EndCallback";
+}).SetEditErrorText((string)ViewData["EditError"]).Bind(Model).GetHtml()

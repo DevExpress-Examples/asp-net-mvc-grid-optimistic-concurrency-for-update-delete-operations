@@ -1,1 +1,1 @@
-<%@ Application Codebehind="Global.asax.vb" Inherits="GridViewOptimisticConcurrencyVBMvc.MvcApplication" Language="vb" %>
+<%@ Application Codebehind="Global.asax.vb" Inherits="GridViewOptimisticConcurrencyMvc.MvcApplication" Language="VB" %>

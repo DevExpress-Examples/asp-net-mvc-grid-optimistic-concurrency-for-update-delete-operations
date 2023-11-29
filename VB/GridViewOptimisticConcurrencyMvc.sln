@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GridViewOptimisticConcurrencyVBMvc", "GridViewOptimisticConcurrencyVBMvc.vbproj", "{AC044D20-0A07-49AA-82B1-58AA4D2CB3FF}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GridViewOptimisticConcurrencyMvc", "GridViewOptimisticConcurrencyMvc.vbproj", "{AC044D20-0A07-49AA-82B1-58AA4D2CB3FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
